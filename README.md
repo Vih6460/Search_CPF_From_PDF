@@ -1,6 +1,6 @@
 # SearchCpfFromPdf
 
-## Requisitos do projeto
+## Project requirements
 **Simple Single-Page Application** that:
 1. **Uploads a PDF** to the frontend.
 2. **Processes the PDF in the backend** to find all CPFs.
