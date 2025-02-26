@@ -1,18 +1,23 @@
 <template>
   <div id="app">
-    <h2>Buscar CPFs em um arquivo PDF</h2>
-    <!-- <input type="file" @change="onFileChange" accept=".pdf" /> -->
-    <div class="file-upload">
-      <input type="file" id="fileInput" @change="onFileChange" accept=".pdf" hidden />
-      <label for="fileInput" class="upload-button">Selecionar PDF</label>
-      <span v-if="pdfFile" class="file-name">{{ pdfFile.name }}</span>
-    </div>
-    <button @click="uploadPDF">Enviar PDF</button>
+    <section id="newSearch">
+      <h2>Buscar CPFs em um arquivo PDF</h2>
+      
+        <div id="btnUpload">
+          <input type="file" id="fileInput" @change="onFileChange" accept=".pdf" hidden />
+          <label for="fileInput" id="upload-button">Selecionar PDF</label>
+          <span v-if="pdfFile" class="file-name">Arquivo selecionado: {{ pdfFile.name }}</span>
+        </div>
+  
+        <button @click="uploadPDF">Enviar PDF</button>
+    </section>
+    <section id="historySearch">
+      <h3>CPFs encontrados:</h3>
 
-    <h3>CPFs encontrados:</h3>
-    <ul>
-      <li v-for="cpf in cpfs" :key="cpf">{{ cpf }}</li>
-    </ul>
+      <ul id="historyList">
+        <li v-for="cpf in cpfs" :key="cpf">{{ cpf }}</li>
+      </ul>
+    </section>
   </div>
 </template>
 

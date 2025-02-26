@@ -2,52 +2,150 @@
 @import './variables';
 
 body {
-    background-color: $background-color;
+    background: $background-color;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     color: $text-color; 
     font-family: $font-family;
     margin: 0;
     padding: 0;
+
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+
+h2 {
+    font-size: 1.75rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
 
 #app {
     text-align: center;
+    border: 1px solid red;
     margin: 20px;
 
-  
-    h2 {
-      font-size: 1.75rem;
+    height: 80vh;
+    width: 100%;
+    max-width: 80vw;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    #newSearch {
+        border: 1px solid green;
+        height: 100%;
+        width: 50%;
+
+        display: flex;
+        flex-direction: column;
+        // justify-content: center;
+        align-items: center;
+
+        #btnUpload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            width: 100%;
+            
+            margin-bottom: 3rem;
+            position: relative; // Necessário para o posicionamento absoluto do <span>
+
+
+
+            #upload-button {
+                background-color: $button-color;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: 0.3s;
+                display: inline-block;
+                text-align: center;
+            
+                &:hover {
+                    background-color: $button-hover-color;
+                }
+            
+                &:active {
+                    background-color: $button-hover-color;
+                }
+            }
+            
+            .file-name {
+                font-size: 14px;
+                color: $text-color;
+                position: absolute;
+                top: 100%;
+                max-width: 90%;
+                white-space: nowrap; 
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: block;
+                padding: 15px 10px;
+                font-size: 14px;
+              }
+        }
     }
 
-    h3 {
-      font-size: 1.5rem;
+    #historySearch {
+        border: 1px solid yellow;
+        height: 100%;
+        width: 50%;
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: column;
+
+        #historySearch h3 {
+            flex: 0 0 20%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+
+        #historyList {
+            flex: 1; 
+            overflow-y: auto;
+          }
     }
   
     input[type="file"] {
-      padding: 10px;
-      margin: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+        padding: 10px;
+        margin: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
     }
   
     button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      background-color: $button-color;
-      color: white;
-      cursor: pointer;
-      font-size: 1rem;
-      margin-left: 10px;
-      transition: background-color .2s;
-  
-      &:hover {
-        background-color: $button-hover-color;
-      }
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        background-color: $button-color;
+        color: white;
+        cursor: pointer;
+        font-size: 1rem;
+        margin-left: 10px;
+        transition: background-color .2s;
+    
+        &:hover {
+            background-color: $button-hover-color;
+        }
     }
   
     ul {
-      list-style-type: none;
-      padding: 0;
+        list-style-type: none;
+        padding: 0;
   
       li {
         font-size: 1rem;
@@ -58,37 +156,4 @@ body {
         border-radius: 4px;
       }
     }
-  }
-  
-
-.file-upload {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.upload-button {
-    background-color: $primary-color; // Defina no seu arquivo de variáveis SCSS
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-    display: inline-block;
-    text-align: center;
-
-    &:hover {
-        background-color: $button-color;
-    }
-
-    &:active {
-        background-color: $button-hover-color;
-    }
-    }
-
-    .file-name {
-    font-size: 14px;
-    color: $text-color;
 }
