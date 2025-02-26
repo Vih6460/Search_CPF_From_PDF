@@ -50,7 +50,26 @@ async function extractTextFromPDF(pdfBuffer) {
   }
 }
 
-// Endpoint para processar o PDF
+app.get("/cpfs", async (req, res) => {
+  try {
+    const snapshot = await db.ref("cpfs").once("value");
+    const cpfs = snapshot.val();
+
+    if (!cpfs) {
+      return res.json({ cpfs: [] });
+    }
+
+    // Converte os valores do Firebase para um array de CPFs
+    const cpfList = Object.values(cpfs);
+
+    res.json({ cpfs: cpfList });
+  } catch (error) {
+    console.error("Erro ao buscar CPFs do banco:", error);
+    res.status(500).json({ error: "Erro ao buscar CPFs" });
+  }
+});
+
+// 🔹 **Rota para processar o PDF e salvar CPFs evitando duplicados**
 app.post("/upload-pdf", upload.single("pdf"), async (req, res) => {
   if (!req.file) {
     return res.status(400).send("Nenhum arquivo foi enviado.");
@@ -58,12 +77,19 @@ app.post("/upload-pdf", upload.single("pdf"), async (req, res) => {
 
   try {
     const extractedText = await extractTextFromPDF(req.file.buffer);
-    const cpfs = extractCPFs(extractedText);
+    let cpfs = extractCPFs(extractedText);
 
-    // Salvar os CPFs no Firebase
-    cpfs.forEach((cpf) => db.ref("cpfs").push(cpf));
+    // 🔍 Buscar CPFs já cadastrados
+    const snapshot = await db.ref("cpfs").once("value");
+    const existingCpfs = new Set(snapshot.val() ? Object.values(snapshot.val()) : []);
 
-    res.json({ cpfs });
+    // 🔹 Filtrar CPFs duplicados
+    const newCpfs = cpfs.filter((cpf) => !existingCpfs.has(cpf));
+
+    // 🔹 Salvar apenas CPFs que ainda não existem no banco
+    newCpfs.forEach((cpf) => db.ref("cpfs").push(cpf));
+
+    res.json({ cpfs: newCpfs });
   } catch (error) {
     console.error("Erro ao processar o PDF:", error);
     res.status(500).send("Erro ao processar o PDF");
