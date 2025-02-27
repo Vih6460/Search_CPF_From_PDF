@@ -8,8 +8,17 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 // Função para extrair CPFs do texto
 function extractCPFs(text) {
-    const regex = /\d{3}\.\d{3}\.\d{3}-\d{2}/g;
-    return text.match(regex) || [];
+    const regex = /\d{3}\.\d{3}\.\d{3}\s*-?\s?\d{2}/g;
+    const foundCpfs = text.match(regex) || [];
+
+    // Se foundCpfs não for vazio, criar o Set para garantir unicidade
+    if (foundCpfs.length > 0) {
+        const uniqueCpfs = new Set(foundCpfs);
+
+        return Array.from(uniqueCpfs);  // Retorna o array de CPFs únicos
+    }
+    
+    return [];
 }
 
 // Função para extrair texto de um PDF
