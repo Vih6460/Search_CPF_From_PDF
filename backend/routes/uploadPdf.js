@@ -11,10 +11,12 @@ function extractCPFs(text) {
     const regex = /\d{3}\.\d{3}\.\d{3}\s*-?\s?\d{2}/g;
     const foundCpfs = text.match(regex) || [];
 
-    // Se foundCpfs não for vazio, criar o Set para garantir unicidade
-    if (foundCpfs.length > 0) {
-        const uniqueCpfs = new Set(foundCpfs);
+    // Remover espaços extras nos CPFs
+    const cleanedCpfs = foundCpfs.map(cpf => cpf.replace(/\s+/g, ''));
 
+    // Se cleanedCpfs não for vazio, criar o Set para garantir unicidade
+    if (cleanedCpfs.length > 0) {
+        const uniqueCpfs = new Set(cleanedCpfs);
         return Array.from(uniqueCpfs);  // Retorna o array de CPFs únicos
     }
     
