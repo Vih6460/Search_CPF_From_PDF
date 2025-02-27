@@ -9,11 +9,37 @@
 5. **List** the newly found CPFs **and** all previously stored ones.
 
 ## Getting Started
-### Prerequisites
-### Installation
-### Usage
 
-## Steps to create this project from 0
+### Prerequisites
+Ensure you have Node.js installed on your system. You can download it from [Node.js official website](https://nodejs.org/).
+
+### Installation
+1. Clone this repository:
+   ```sh
+   git clone https://github.com/Vih6460/Search_CPF_From_PDF.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd Search_CPF_From_PDF/
+   ```
+2. Install the dependencies:
+   ```sh
+   npm i
+   ```
+
+### Usage
+#### To start the backend server, in the backend folder run:
+```sh
+node server.js
+```
+
+#### To start the frontend Vue2 project, in the frontend folder run:
+```sh
+npm run serve
+```
+You will can see the application in `http://localhost:8080`.
+
+## Steps to create your own project
 
 ### Create a folder for your project
 
@@ -83,3 +109,15 @@ npm i axios@0.21.1
 ```sh
 npm run serve
 ```
+
+## Contributing
+
+Feel free to fork this repository and submit pull requests with improvements or additional features.
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+Happy coding! 🚀
