@@ -28,10 +28,18 @@ Ensure you have Node.js installed on your system. You can download it from [Node
    ```
 
 ### Usage
+
+#### [Config the Firebase admin](#config-the-firebase-admin-sdk)
+
+#### Create the server.js file inside the backend folder
+
+#### Create the .env file inside the backend folder
+
 #### To start the backend server, in the backend folder run:
 ```sh
 node server.js
 ```
+
 
 #### To start the frontend Vue2 project, in the frontend folder run:
 ```sh
