@@ -191,3 +191,46 @@ h3 {
         border-radius: .375rem;
     }
 }
+
+@media (width <= 60em) {
+    h2 {
+        font-size: 1rem;
+    }
+    
+    h3 {
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+
+    #app {
+        flex-direction: column;
+    }
+
+    #app #newSearch {
+        width: 90%;
+    }
+
+    #app #newSearch #fileName {
+        height: 2.5rem;
+    }
+
+    #app #newSearch #btnUpload #uploadButton{
+        height: unset;
+        width: unset;
+        font-size: .75rem;
+    }
+    
+    #app #newSearch #btnSendPdf{
+        width: unset;
+        font-size: .75rem;
+    }
+
+    #app #newSearch #containerTxtArea #txtAreaCpfsFound {
+        font-size: .75rem;
+    }
+
+    #app #historySearch {
+        width: 90%;
+        margin-top: 1rem;
+    }
+}
