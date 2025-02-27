@@ -192,6 +192,12 @@ h3 {
     }
 }
 
+#loadingMessage {
+    color: rgb(16 185 129/var(--tw-text-opacity,1));
+    font-weight: bold;
+    margin-top: 10px;
+}
+
 @media (width <= 60em) {
     h2 {
         font-size: 1rem;

@@ -8,7 +8,9 @@
                 <label for="fileInput" id="uploadButton">Selecionar PDF</label>
             </div>
 
-            <button id="btnSendPdf" @click="uploadPDF">Enviar PDF</button>
+            <button id="btnSendPdf" @click="uploadPDF" :disabled="isLoading">
+                {{ isLoading ? "Processando..." : "Enviar PDF" }}
+            </button>
         </div>
 
         <div id="containerFileName">
@@ -18,50 +20,57 @@
         <div id="containerTxtArea">
             <textarea readonly v-model="cpfsFoundText" id="txtAreaCpfsFound"></textarea>
         </div>
+
+        <p v-if="isLoading" id="loadingMessage">Carregando e processando o PDF...</p>
     </section>
 </template>
 
 <script>
-    import axios from 'axios';
+import axios from 'axios';
 
-    export default {
-        data() {
-            return {
-                pdfFile: "",
-                cpfsFoundText: ""
-            };
+export default {
+    data() {
+        return {
+            pdfFile: "",
+            cpfsFoundText: "",
+            isLoading: false,
+        };
+    },
+    methods: {
+        onFileChange(event) {
+            const file = event.target.files[0];
+
+            if (file && file.type === 'application/pdf') {
+                this.pdfFile = file;
+            } else {
+                alert('Arquivo inválido, envie um arquivo .PDF.');
+            }
         },
-        methods: {
-            onFileChange(event) {
-                const file = event.target.files[0];
+        async uploadPDF() {
+            if (!this.pdfFile) {
+                alert('Por favor, selecione um PDF primeiro.');
+                return;
+            }
 
-                if (file && file.type === 'application/pdf') {
-                    this.pdfFile = file;
-                } else {
-                    alert('Arquivo inválido, envie um arquivo .PDF.');
-                }
-            },
-            async uploadPDF() {
-                if (!this.pdfFile) {
-                    alert('Por favor, selecione um PDF primeiro.');
-                    return;
-                }
+            this.isLoading = true; 
 
-                const formData = new FormData();
-                formData.append('pdf', this.pdfFile);
+            const formData = new FormData();
+            formData.append('pdf', this.pdfFile);
 
-                try {
-                    const response = await axios.post('http://localhost:3333/upload-pdf', formData, {
-                        headers: { 'Content-Type': 'multipart/form-data' }
-                    });
+            try {
+                const response = await axios.post('http://localhost:3333/upload-pdf', formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
 
-                    this.cpfsFoundText = response.data.cpfs.join(", ");
-                    this.$emit("pdfProcessed"); // Emite evento para atualizar o histórico
-                } catch (error) {
-                    console.error(error);
-                    alert('Erro ao processar o PDF.');
-                }
+                this.cpfsFoundText = response.data.cpfs.join(", ");
+                this.$emit("pdfProcessed"); // Emite evento para atualizar o histórico
+            } catch (error) {
+                console.error(error);
+                alert('Erro ao processar o PDF.');
+            } finally {
+                this.isLoading = false; 
             }
         }
-    };
+    }
+};
 </script>
