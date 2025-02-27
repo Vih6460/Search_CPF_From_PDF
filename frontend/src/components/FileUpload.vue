@@ -63,8 +63,14 @@ export default {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 });
 
-                this.cpfsFoundText = response.data.cpfs.join(", ");
-                this.$emit("pdfProcessed"); 
+                // Verifique se a lista de CPFs está vazia
+                if (response.data.cpfs.length === 0) {
+                    this.cpfsFoundText = 'Nenhum CPF novo foi encontrado';
+                } else {
+                    this.cpfsFoundText = response.data.cpfs.join(", ");
+                }
+
+                this.$emit("pdfProcessed"); // Emite evento para atualizar o histórico
             } catch (error) {
                 console.error(error);
                 alert('Erro ao processar o PDF.');
