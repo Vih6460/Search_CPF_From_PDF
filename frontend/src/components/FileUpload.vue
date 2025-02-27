@@ -8,7 +8,7 @@
                 <label for="fileInput" id="uploadButton">Selecionar PDF</label>
             </div>
 
-            <button id="btnSendPdf" @click="uploadPDF" :disabled="isLoading">
+            <button id="btnSendPdf" @click="uploadPDF" :disabled="!pdfFile || isLoading">
                 {{ isLoading ? "Processando..." : "Enviar PDF" }}
             </button>
         </div>
@@ -31,7 +31,7 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            pdfFile: "",
+            pdfFile: null,
             cpfsFoundText: "",
             isLoading: false,
         };
@@ -44,6 +44,7 @@ export default {
                 this.pdfFile = file;
             } else {
                 alert('Arquivo inválido, envie um arquivo .PDF.');
+                this.pdfFile = null;
             }
         },
         async uploadPDF() {
@@ -52,7 +53,7 @@ export default {
                 return;
             }
 
-            this.isLoading = true; 
+            this.isLoading = true;
 
             const formData = new FormData();
             formData.append('pdf', this.pdfFile);
@@ -63,12 +64,13 @@ export default {
                 });
 
                 this.cpfsFoundText = response.data.cpfs.join(", ");
-                this.$emit("pdfProcessed"); // Emite evento para atualizar o histórico
+                this.$emit("pdfProcessed"); 
             } catch (error) {
                 console.error(error);
                 alert('Erro ao processar o PDF.');
             } finally {
-                this.isLoading = false; 
+                this.isLoading = false;
+                this.pdfFile = null;
             }
         }
     }
