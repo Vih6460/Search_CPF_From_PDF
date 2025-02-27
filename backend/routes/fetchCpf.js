@@ -1,8 +1,7 @@
 const express = require("express");
-const admin = require("firebase-admin");
+const { db } = require("../firebase"); // Agora importando o db do firebase.js
 
 const router = express.Router();
-const db = admin.database();
 
 router.get("/cpfs", async (req, res) => {
   try {

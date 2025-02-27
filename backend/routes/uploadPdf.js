@@ -1,10 +1,9 @@
 const express = require("express");
 const multer = require("multer");
 const pdfjsLib = require("pdfjs-dist");
-const admin = require("firebase-admin");
+const { admin, db } = require("../firebase"); // Agora importa do firebase.js
 
 const router = express.Router();
-const db = admin.database();
 const upload = multer({ storage: multer.memoryStorage() });
 
 // Função para extrair CPFs do texto
